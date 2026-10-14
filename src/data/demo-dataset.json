@@ -1,0 +1,1360 @@
+{
+ "name": "Demonstration Dataset (fictional)",
+ "samples": [
+  {
+   "id": "DEMO-001",
+   "collectionDate": null,
+   "region": "East Region",
+   "lineage": "DEMO.A"
+  },
+  {
+   "id": "DEMO-002",
+   "collectionDate": "2026-10-19",
+   "region": "South Region",
+   "lineage": "DEMO.A"
+  },
+  {
+   "id": "DEMO-003",
+   "collectionDate": null,
+   "region": "East Region",
+   "lineage": "DEMO.A"
+  },
+  {
+   "id": "DEMO-004",
+   "collectionDate": "2026-07-02",
+   "region": "North Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-005",
+   "collectionDate": "2026-08-19",
+   "region": "North Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-006",
+   "collectionDate": "2026-08-23",
+   "region": "North Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-007",
+   "collectionDate": "2026-12-08",
+   "region": "West Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-008",
+   "collectionDate": "2026-07-18",
+   "region": "East Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-009",
+   "collectionDate": "2026-11-13",
+   "region": "East Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-010",
+   "collectionDate": "2026-07-18",
+   "region": "Central Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-011",
+   "collectionDate": null,
+   "region": "West Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-012",
+   "collectionDate": "2026-04-15",
+   "region": "South Region",
+   "lineage": "DEMO.A.1"
+  },
+  {
+   "id": "DEMO-013",
+   "collectionDate": null,
+   "region": "East Region",
+   "lineage": "DEMO.A"
+  },
+  {
+   "id": "DEMO-014",
+   "collectionDate": "2026-02-04",
+   "region": "West Region",
+   "lineage": "DEMO.A"
+  },
+  {
+   "id": "DEMO-015",
+   "collectionDate": "2026-09-25",
+   "region": "East Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-016",
+   "collectionDate": "2026-04-07",
+   "region": "South Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-017",
+   "collectionDate": "2026-10-12",
+   "region": "South Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-018",
+   "collectionDate": "2026-12-25",
+   "region": "East Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-019",
+   "collectionDate": "2026-03-01",
+   "region": "West Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-020",
+   "collectionDate": null,
+   "region": "North Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-021",
+   "collectionDate": "2026-06-09",
+   "region": "East Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-022",
+   "collectionDate": "2026-06-15",
+   "region": "Central Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-023",
+   "collectionDate": null,
+   "region": "North Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-024",
+   "collectionDate": "2026-04-23",
+   "region": "South Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-025",
+   "collectionDate": null,
+   "region": "East Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-026",
+   "collectionDate": "2026-03-23",
+   "region": "South Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-027",
+   "collectionDate": "2026-03-15",
+   "region": "North Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-028",
+   "collectionDate": "2026-12-01",
+   "region": "Central Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-029",
+   "collectionDate": null,
+   "region": "East Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-030",
+   "collectionDate": null,
+   "region": "Central Region",
+   "lineage": "DEMO.B"
+  },
+  {
+   "id": "DEMO-031",
+   "collectionDate": "2026-09-14",
+   "region": "South Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-032",
+   "collectionDate": "2026-08-17",
+   "region": "South Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-033",
+   "collectionDate": "2026-11-14",
+   "region": "Central Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-034",
+   "collectionDate": "2026-07-28",
+   "region": "South Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-035",
+   "collectionDate": "2026-01-10",
+   "region": "East Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-036",
+   "collectionDate": null,
+   "region": "North Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-037",
+   "collectionDate": "2026-09-28",
+   "region": "Central Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-038",
+   "collectionDate": "2026-05-24",
+   "region": "East Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-039",
+   "collectionDate": null,
+   "region": "South Region",
+   "lineage": "DEMO.C"
+  },
+  {
+   "id": "DEMO-040",
+   "collectionDate": null,
+   "region": "North Region",
+   "lineage": "DEMO.C"
+  }
+ ],
+ "tree": [
+  {
+   "id": "N1",
+   "parent": null,
+   "branchLength": 0.00052,
+   "mutations": []
+  },
+  {
+   "id": "N2",
+   "parent": "N1",
+   "branchLength": 0.00085,
+   "mutations": [
+    "A2573G"
+   ]
+  },
+  {
+   "id": "N3",
+   "parent": "N2",
+   "branchLength": 0.00041,
+   "mutations": [
+    "T3016C",
+    "C2489A"
+   ]
+  },
+  {
+   "id": "DEMO-001",
+   "parent": "N3",
+   "branchLength": 0.00062,
+   "mutations": [
+    "A27294C",
+    "A20864T"
+   ]
+  },
+  {
+   "id": "N5",
+   "parent": "N3",
+   "branchLength": 0.00106,
+   "mutations": [
+    "T9689A",
+    "A17917T"
+   ]
+  },
+  {
+   "id": "DEMO-002",
+   "parent": "N5",
+   "branchLength": 0.00076,
+   "mutations": [
+    "C22547A"
+   ]
+  },
+  {
+   "id": "DEMO-003",
+   "parent": "N5",
+   "branchLength": 0.00075,
+   "mutations": []
+  },
+  {
+   "id": "N8",
+   "parent": "N2",
+   "branchLength": 0.00098,
+   "mutations": [
+    "T15456C"
+   ]
+  },
+  {
+   "id": "N9",
+   "parent": "N8",
+   "branchLength": 0.00098,
+   "mutations": [
+    "G2882T",
+    "G16423T"
+   ]
+  },
+  {
+   "id": "N10",
+   "parent": "N9",
+   "branchLength": 0.00081,
+   "mutations": [
+    "A2598T"
+   ]
+  },
+  {
+   "id": "N11",
+   "parent": "N10",
+   "branchLength": 0.00096,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-004",
+   "parent": "N11",
+   "branchLength": 0.00113,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-005",
+   "parent": "N11",
+   "branchLength": 0.00077,
+   "mutations": [
+    "G28887C",
+    "G22983T"
+   ]
+  },
+  {
+   "id": "DEMO-006",
+   "parent": "N10",
+   "branchLength": 0.00114,
+   "mutations": []
+  },
+  {
+   "id": "N15",
+   "parent": "N9",
+   "branchLength": 0.00078,
+   "mutations": [
+    "T22522C",
+    "T23682G"
+   ]
+  },
+  {
+   "id": "N16",
+   "parent": "N15",
+   "branchLength": 0.00114,
+   "mutations": []
+  },
+  {
+   "id": "N17",
+   "parent": "N16",
+   "branchLength": 0.00081,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-007",
+   "parent": "N17",
+   "branchLength": 0.00026,
+   "mutations": [
+    "G25373A"
+   ]
+  },
+  {
+   "id": "DEMO-008",
+   "parent": "N17",
+   "branchLength": 0.00037,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-009",
+   "parent": "N16",
+   "branchLength": 0.00106,
+   "mutations": [
+    "T9323C"
+   ]
+  },
+  {
+   "id": "N21",
+   "parent": "N15",
+   "branchLength": 0.00035,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-010",
+   "parent": "N21",
+   "branchLength": 0.00043,
+   "mutations": [
+    "C16091G",
+    "A9438C"
+   ]
+  },
+  {
+   "id": "N23",
+   "parent": "N21",
+   "branchLength": 0.00089,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-011",
+   "parent": "N23",
+   "branchLength": 0.00115,
+   "mutations": [
+    "A21661G",
+    "T29675C"
+   ]
+  },
+  {
+   "id": "DEMO-012",
+   "parent": "N23",
+   "branchLength": 0.00039,
+   "mutations": []
+  },
+  {
+   "id": "N26",
+   "parent": "N8",
+   "branchLength": 0.0002,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-013",
+   "parent": "N26",
+   "branchLength": 0.00074,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-014",
+   "parent": "N26",
+   "branchLength": 0.00058,
+   "mutations": [
+    "G20988C",
+    "G19935C"
+   ]
+  },
+  {
+   "id": "N29",
+   "parent": "N1",
+   "branchLength": 0.00051,
+   "mutations": [
+    "A4922T"
+   ]
+  },
+  {
+   "id": "N30",
+   "parent": "N29",
+   "branchLength": 0.00103,
+   "mutations": [
+    "A5490C"
+   ]
+  },
+  {
+   "id": "N31",
+   "parent": "N30",
+   "branchLength": 0.00089,
+   "mutations": []
+  },
+  {
+   "id": "N32",
+   "parent": "N31",
+   "branchLength": 0.0005,
+   "mutations": [
+    "A21267T",
+    "G27903T"
+   ]
+  },
+  {
+   "id": "DEMO-015",
+   "parent": "N32",
+   "branchLength": 0.00111,
+   "mutations": [
+    "C11855T"
+   ]
+  },
+  {
+   "id": "DEMO-016",
+   "parent": "N32",
+   "branchLength": 0.00101,
+   "mutations": [
+    "C25048A",
+    "T27015G"
+   ]
+  },
+  {
+   "id": "DEMO-017",
+   "parent": "N31",
+   "branchLength": 0.00023,
+   "mutations": [
+    "G1115C",
+    "C8692T"
+   ]
+  },
+  {
+   "id": "N36",
+   "parent": "N30",
+   "branchLength": 0.00042,
+   "mutations": []
+  },
+  {
+   "id": "N37",
+   "parent": "N36",
+   "branchLength": 0.0004,
+   "mutations": [
+    "T6896G"
+   ]
+  },
+  {
+   "id": "DEMO-018",
+   "parent": "N37",
+   "branchLength": 0.00104,
+   "mutations": [
+    "G15911T",
+    "A2978G"
+   ]
+  },
+  {
+   "id": "N39",
+   "parent": "N37",
+   "branchLength": 0.00053,
+   "mutations": [
+    "T26441C",
+    "A13352T"
+   ]
+  },
+  {
+   "id": "DEMO-019",
+   "parent": "N39",
+   "branchLength": 0.00037,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-020",
+   "parent": "N39",
+   "branchLength": 0.00035,
+   "mutations": [
+    "T27283G",
+    "C11682T"
+   ]
+  },
+  {
+   "id": "N42",
+   "parent": "N36",
+   "branchLength": 0.00119,
+   "mutations": [
+    "C6583A"
+   ]
+  },
+  {
+   "id": "DEMO-021",
+   "parent": "N42",
+   "branchLength": 0.00041,
+   "mutations": [
+    "C16622T"
+   ]
+  },
+  {
+   "id": "DEMO-022",
+   "parent": "N42",
+   "branchLength": 0.00111,
+   "mutations": []
+  },
+  {
+   "id": "N45",
+   "parent": "N29",
+   "branchLength": 0.00073,
+   "mutations": []
+  },
+  {
+   "id": "N46",
+   "parent": "N45",
+   "branchLength": 0.00098,
+   "mutations": [
+    "A20141C"
+   ]
+  },
+  {
+   "id": "DEMO-023",
+   "parent": "N46",
+   "branchLength": 0.00034,
+   "mutations": []
+  },
+  {
+   "id": "N48",
+   "parent": "N46",
+   "branchLength": 0.00076,
+   "mutations": [
+    "A25899T",
+    "C2061A"
+   ]
+  },
+  {
+   "id": "N49",
+   "parent": "N48",
+   "branchLength": 0.00097,
+   "mutations": []
+  },
+  {
+   "id": "N50",
+   "parent": "N49",
+   "branchLength": 0.00023,
+   "mutations": [
+    "A29494G",
+    "C10869T"
+   ]
+  },
+  {
+   "id": "DEMO-024",
+   "parent": "N50",
+   "branchLength": 0.00065,
+   "mutations": [
+    "T17674G"
+   ]
+  },
+  {
+   "id": "DEMO-025",
+   "parent": "N50",
+   "branchLength": 0.00109,
+   "mutations": [
+    "T6838A",
+    "A13852G"
+   ]
+  },
+  {
+   "id": "DEMO-026",
+   "parent": "N49",
+   "branchLength": 0.00027,
+   "mutations": [
+    "G22137A"
+   ]
+  },
+  {
+   "id": "DEMO-027",
+   "parent": "N48",
+   "branchLength": 0.00045,
+   "mutations": []
+  },
+  {
+   "id": "N55",
+   "parent": "N45",
+   "branchLength": 0.00036,
+   "mutations": [
+    "C22083A"
+   ]
+  },
+  {
+   "id": "N56",
+   "parent": "N55",
+   "branchLength": 0.0006,
+   "mutations": [
+    "C14004G",
+    "A10637T"
+   ]
+  },
+  {
+   "id": "DEMO-028",
+   "parent": "N56",
+   "branchLength": 0.00022,
+   "mutations": [
+    "T18355C"
+   ]
+  },
+  {
+   "id": "DEMO-029",
+   "parent": "N56",
+   "branchLength": 0.0005,
+   "mutations": [
+    "A2306C",
+    "A28917C"
+   ]
+  },
+  {
+   "id": "DEMO-030",
+   "parent": "N55",
+   "branchLength": 0.00096,
+   "mutations": [
+    "T27062G"
+   ]
+  },
+  {
+   "id": "N60",
+   "parent": "N1",
+   "branchLength": 0.00053,
+   "mutations": [
+    "A9344T",
+    "T6207A"
+   ]
+  },
+  {
+   "id": "N61",
+   "parent": "N60",
+   "branchLength": 0.00029,
+   "mutations": [
+    "A8737T",
+    "C28256A"
+   ]
+  },
+  {
+   "id": "DEMO-031",
+   "parent": "N61",
+   "branchLength": 0.00106,
+   "mutations": [
+    "A15069G"
+   ]
+  },
+  {
+   "id": "N63",
+   "parent": "N61",
+   "branchLength": 0.00091,
+   "mutations": [
+    "C3786G",
+    "C1850A"
+   ]
+  },
+  {
+   "id": "DEMO-032",
+   "parent": "N63",
+   "branchLength": 0.00083,
+   "mutations": [
+    "C17602G"
+   ]
+  },
+  {
+   "id": "N65",
+   "parent": "N63",
+   "branchLength": 0.00024,
+   "mutations": [
+    "C804T"
+   ]
+  },
+  {
+   "id": "DEMO-033",
+   "parent": "N65",
+   "branchLength": 0.00045,
+   "mutations": [
+    "A14849T"
+   ]
+  },
+  {
+   "id": "N67",
+   "parent": "N65",
+   "branchLength": 0.00051,
+   "mutations": [
+    "C7251G",
+    "C6708G"
+   ]
+  },
+  {
+   "id": "N68",
+   "parent": "N67",
+   "branchLength": 0.00021,
+   "mutations": []
+  },
+  {
+   "id": "DEMO-034",
+   "parent": "N68",
+   "branchLength": 0.00094,
+   "mutations": [
+    "T8575A",
+    "A2015T"
+   ]
+  },
+  {
+   "id": "N70",
+   "parent": "N68",
+   "branchLength": 0.00049,
+   "mutations": [
+    "C15255A",
+    "T9015A"
+   ]
+  },
+  {
+   "id": "DEMO-035",
+   "parent": "N70",
+   "branchLength": 0.00056,
+   "mutations": [
+    "G10978A"
+   ]
+  },
+  {
+   "id": "N72",
+   "parent": "N70",
+   "branchLength": 0.00058,
+   "mutations": [
+    "G15753T"
+   ]
+  },
+  {
+   "id": "DEMO-036",
+   "parent": "N72",
+   "branchLength": 0.0004,
+   "mutations": [
+    "A16739C",
+    "A8856C"
+   ]
+  },
+  {
+   "id": "DEMO-037",
+   "parent": "N72",
+   "branchLength": 0.0005,
+   "mutations": [
+    "A7828T"
+   ]
+  },
+  {
+   "id": "DEMO-038",
+   "parent": "N67",
+   "branchLength": 0.00096,
+   "mutations": [
+    "T23815A"
+   ]
+  },
+  {
+   "id": "N76",
+   "parent": "N60",
+   "branchLength": 0.00109,
+   "mutations": [
+    "T20756G",
+    "C23172T"
+   ]
+  },
+  {
+   "id": "DEMO-039",
+   "parent": "N76",
+   "branchLength": 0.00077,
+   "mutations": [
+    "A26837T",
+    "C19338A"
+   ]
+  },
+  {
+   "id": "DEMO-040",
+   "parent": "N76",
+   "branchLength": 0.00058,
+   "mutations": []
+  }
+ ],
+ "mutations": [
+  {
+   "id": "A2573G",
+   "position": 2573,
+   "ancestral": "A",
+   "derived": "G"
+  },
+  {
+   "id": "T3016C",
+   "position": 3016,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "C2489A",
+   "position": 2489,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "A27294C",
+   "position": 27294,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A20864T",
+   "position": 20864,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "T9689A",
+   "position": 9689,
+   "ancestral": "T",
+   "derived": "A"
+  },
+  {
+   "id": "A17917T",
+   "position": 17917,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "C22547A",
+   "position": 22547,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "T15456C",
+   "position": 15456,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "G2882T",
+   "position": 2882,
+   "ancestral": "G",
+   "derived": "T"
+  },
+  {
+   "id": "G16423T",
+   "position": 16423,
+   "ancestral": "G",
+   "derived": "T"
+  },
+  {
+   "id": "A2598T",
+   "position": 2598,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "G28887C",
+   "position": 28887,
+   "ancestral": "G",
+   "derived": "C"
+  },
+  {
+   "id": "G22983T",
+   "position": 22983,
+   "ancestral": "G",
+   "derived": "T"
+  },
+  {
+   "id": "T22522C",
+   "position": 22522,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "T23682G",
+   "position": 23682,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "G25373A",
+   "position": 25373,
+   "ancestral": "G",
+   "derived": "A"
+  },
+  {
+   "id": "T9323C",
+   "position": 9323,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "C16091G",
+   "position": 16091,
+   "ancestral": "C",
+   "derived": "G"
+  },
+  {
+   "id": "A9438C",
+   "position": 9438,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A21661G",
+   "position": 21661,
+   "ancestral": "A",
+   "derived": "G"
+  },
+  {
+   "id": "T29675C",
+   "position": 29675,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "G20988C",
+   "position": 20988,
+   "ancestral": "G",
+   "derived": "C"
+  },
+  {
+   "id": "G19935C",
+   "position": 19935,
+   "ancestral": "G",
+   "derived": "C"
+  },
+  {
+   "id": "A4922T",
+   "position": 4922,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "A5490C",
+   "position": 5490,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A21267T",
+   "position": 21267,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "G27903T",
+   "position": 27903,
+   "ancestral": "G",
+   "derived": "T"
+  },
+  {
+   "id": "C11855T",
+   "position": 11855,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "C25048A",
+   "position": 25048,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "T27015G",
+   "position": 27015,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "G1115C",
+   "position": 1115,
+   "ancestral": "G",
+   "derived": "C"
+  },
+  {
+   "id": "C8692T",
+   "position": 8692,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "T6896G",
+   "position": 6896,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "G15911T",
+   "position": 15911,
+   "ancestral": "G",
+   "derived": "T"
+  },
+  {
+   "id": "A2978G",
+   "position": 2978,
+   "ancestral": "A",
+   "derived": "G"
+  },
+  {
+   "id": "T26441C",
+   "position": 26441,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "A13352T",
+   "position": 13352,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "T27283G",
+   "position": 27283,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "C11682T",
+   "position": 11682,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "C6583A",
+   "position": 6583,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "C16622T",
+   "position": 16622,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "A20141C",
+   "position": 20141,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A25899T",
+   "position": 25899,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "C2061A",
+   "position": 2061,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "A29494G",
+   "position": 29494,
+   "ancestral": "A",
+   "derived": "G"
+  },
+  {
+   "id": "C10869T",
+   "position": 10869,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "T17674G",
+   "position": 17674,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "T6838A",
+   "position": 6838,
+   "ancestral": "T",
+   "derived": "A"
+  },
+  {
+   "id": "A13852G",
+   "position": 13852,
+   "ancestral": "A",
+   "derived": "G"
+  },
+  {
+   "id": "G22137A",
+   "position": 22137,
+   "ancestral": "G",
+   "derived": "A"
+  },
+  {
+   "id": "C22083A",
+   "position": 22083,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "C14004G",
+   "position": 14004,
+   "ancestral": "C",
+   "derived": "G"
+  },
+  {
+   "id": "A10637T",
+   "position": 10637,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "T18355C",
+   "position": 18355,
+   "ancestral": "T",
+   "derived": "C"
+  },
+  {
+   "id": "A2306C",
+   "position": 2306,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A28917C",
+   "position": 28917,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "T27062G",
+   "position": 27062,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "A9344T",
+   "position": 9344,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "T6207A",
+   "position": 6207,
+   "ancestral": "T",
+   "derived": "A"
+  },
+  {
+   "id": "A8737T",
+   "position": 8737,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "C28256A",
+   "position": 28256,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "A15069G",
+   "position": 15069,
+   "ancestral": "A",
+   "derived": "G"
+  },
+  {
+   "id": "C3786G",
+   "position": 3786,
+   "ancestral": "C",
+   "derived": "G"
+  },
+  {
+   "id": "C1850A",
+   "position": 1850,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "C17602G",
+   "position": 17602,
+   "ancestral": "C",
+   "derived": "G"
+  },
+  {
+   "id": "C804T",
+   "position": 804,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "A14849T",
+   "position": 14849,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "C7251G",
+   "position": 7251,
+   "ancestral": "C",
+   "derived": "G"
+  },
+  {
+   "id": "C6708G",
+   "position": 6708,
+   "ancestral": "C",
+   "derived": "G"
+  },
+  {
+   "id": "T8575A",
+   "position": 8575,
+   "ancestral": "T",
+   "derived": "A"
+  },
+  {
+   "id": "A2015T",
+   "position": 2015,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "C15255A",
+   "position": 15255,
+   "ancestral": "C",
+   "derived": "A"
+  },
+  {
+   "id": "T9015A",
+   "position": 9015,
+   "ancestral": "T",
+   "derived": "A"
+  },
+  {
+   "id": "G10978A",
+   "position": 10978,
+   "ancestral": "G",
+   "derived": "A"
+  },
+  {
+   "id": "G15753T",
+   "position": 15753,
+   "ancestral": "G",
+   "derived": "T"
+  },
+  {
+   "id": "A16739C",
+   "position": 16739,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A8856C",
+   "position": 8856,
+   "ancestral": "A",
+   "derived": "C"
+  },
+  {
+   "id": "A7828T",
+   "position": 7828,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "T23815A",
+   "position": 23815,
+   "ancestral": "T",
+   "derived": "A"
+  },
+  {
+   "id": "T20756G",
+   "position": 20756,
+   "ancestral": "T",
+   "derived": "G"
+  },
+  {
+   "id": "C23172T",
+   "position": 23172,
+   "ancestral": "C",
+   "derived": "T"
+  },
+  {
+   "id": "A26837T",
+   "position": 26837,
+   "ancestral": "A",
+   "derived": "T"
+  },
+  {
+   "id": "C19338A",
+   "position": 19338,
+   "ancestral": "C",
+   "derived": "A"
+  }
+ ]
+}
