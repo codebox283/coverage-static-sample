@@ -148,7 +148,7 @@ export function TreeView({ p, colorBy, lineages, selected, highlightNodes, onSel
     </div>
     <canvas ref={canvasRef} role="img" aria-label="Interactive phylogenetic tree" className={`h-[560px] w-full touch-none rounded border bg-card ${mode === "select" ? "cursor-crosshair" : "cursor-grab active:cursor-grabbing"}`}
       onPointerDown={(e) => { if (e.button !== 0) return; const pos = point(e); e.currentTarget.setPointerCapture(e.pointerId); drag.current = { start: pos, last: pos, moved: false }; if (mode === "select") setBox({ start: pos, end: pos }); }}
-      onPointerMove={(e) => { const d = drag.current; if (!d) return; const pos = point(e); d.moved ||= Math.hypot(pos.x - d.start.x, pos.y - d.start.y) > 4; if (mode === "select") setBox({ start: d.start, end: pos }); else setView((v) => ({ ...v, x: v.x + pos.x - d.last.x, y: v.y + pos.y - d.last.y })); d.last = pos; }}
+      onPointerMove={(e) => { const d = drag.current; if (!d) return; const pos = point(e); const dx = pos.x - d.last.x, dy = pos.y - d.last.y; d.moved ||= Math.hypot(pos.x - d.start.x, pos.y - d.start.y) > 4; if (mode === "select") setBox({ start: d.start, end: pos }); else setView((v) => ({ ...v, x: v.x + dx, y: v.y + dy })); d.last = pos; }}
       onPointerUp={finish} onPointerCancel={() => { drag.current = null; setBox(null); }} />
     <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
       {colorBy === "lineage" ? lineages.map((l) => <span key={l} className="flex items-center gap-1"><span className="h-2 w-4 rounded-sm" style={{ background: lineColors.get(l) }} />{l}</span>) : <span>0–{p.maxMutations} cumulative mutations</span>}

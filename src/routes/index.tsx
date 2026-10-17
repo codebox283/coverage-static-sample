@@ -19,8 +19,8 @@ export const Route = createFileRoute("/")({
 });
 
 const Panel = ({ title, id, children, extra }: { title: string; id?: string; children: React.ReactNode; extra?: React.ReactNode }) => (
-  <section id={id} className="rounded-md border bg-card p-4">
-    <div className="mb-3 flex items-center justify-between gap-2">
+  <section id={id} className="min-w-0 rounded-md border bg-card p-4">
+    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
       <h2 className="text-sm font-semibold uppercase tracking-wide text-primary">{title}</h2>{extra}
     </div>
     {children}
@@ -198,25 +198,27 @@ function Dashboard() {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-2">
-          <Panel id="mutations" title="Mutation explorer (demo annotations)" extra={<input className={input} placeholder="Search mutation/position" value={mutQ} onChange={(e) => setMutQ(e.target.value)} />}>
-            <WindowedRows items={mutRows} header={<tr><th className="py-1">Mutation</th><th>Position</th><th>Anc.</th><th>Der.</th><th className="text-right">Desc. samples</th></tr>} render={(m) => (
+          <Panel id="mutations" title="Mutation explorer (demo annotations)" extra={<input className={`${input} max-w-full`} placeholder="Search mutation/position" value={mutQ} onChange={(e) => setMutQ(e.target.value)} />}>
+            <WindowedRows items={mutRows} columns={5} minWidth={580} label="Mutation explorer data" header={<tr><th className="py-1">Mutation</th><th>Position</th><th>Anc.</th><th>Der.</th><th className="text-right">Desc. samples</th></tr>} render={(m) => (
                   <tr key={m.id} onClick={() => setMutation(mutation === m.id ? null : m.id)} className={`h-7 cursor-pointer border-t hover:bg-muted ${mutation === m.id ? "bg-highlight/15" : ""}`}>
-                    <td className="truncate py-1 font-mono">{m.id}</td><td className="font-mono">{m.position}</td><td>{m.ancestral}</td><td>{m.derived}</td><td className="text-right font-mono">{m.descendantSamples}</td>
+                    <td className="py-1 font-mono" title={m.id}>{m.id}</td><td className="font-mono">{m.position}</td><td>{m.ancestral}</td><td>{m.derived}</td><td className="text-right font-mono">{m.descendantSamples}</td>
                   </tr>)} />
             {!mutRows.length && <p className="py-6 text-center text-sm text-muted-foreground">No mutations match.</p>}
+            <p className="mt-2 text-xs text-muted-foreground">{mutRows.length.toLocaleString()} of {p.mutationStats.length.toLocaleString()} mutations</p>
           </Panel>
 
           <Panel title="Sample metadata" extra={
-            <div className="flex gap-1">
+            <div className="flex max-w-full flex-wrap gap-1">
               <input className={`${input} w-28`} placeholder="Search ID" value={q} onChange={(e) => setQ(e.target.value)} />
               <select className={input} value={region} onChange={(e) => setRegion(e.target.value)}><option value="">All regions</option>{regions.map((r) => <option key={r}>{r}</option>)}</select>
               <select className={input} value={lineage} onChange={(e) => setLineage(e.target.value)}><option value="">All lineages</option>{lineages.map((r) => <option key={r}>{r}</option>)}</select>
             </div>}>
-            <WindowedRows items={rows} header={<tr><th className="py-1">Sample ID</th><th>Date</th><th>Region</th><th>Lineage</th><th className="text-right">Muts.</th></tr>} render={(s) => (
+            <WindowedRows items={rows} columns={5} minWidth={720} label="Sample metadata data" header={<tr><th className="py-1">Sample ID</th><th>Date</th><th>Region</th><th>Lineage</th><th className="text-right">Muts.</th></tr>} render={(s) => (
                   <tr key={s.id} onClick={() => setSelected(s.id)} className={`h-7 cursor-pointer border-t hover:bg-muted ${selected === s.id ? "bg-highlight/15" : ""}`}>
-                    <td className="truncate py-1 font-mono">{s.id}</td><td>{s.collectionDate ?? "—"}</td><td>{s.region}</td><td>{s.lineage}</td><td className="text-right font-mono">{mutCount(s.id)}</td>
+                    <td className="py-1 font-mono" title={s.id}>{s.id}</td><td>{s.collectionDate ?? "—"}</td><td title={s.region}>{s.region}</td><td title={s.lineage}>{s.lineage}</td><td className="text-right font-mono">{mutCount(s.id)}</td>
                   </tr>)} />
             {!rows.length && <p className="py-6 text-center text-sm text-muted-foreground">No samples match these filters.</p>}
+            <p className="mt-2 text-xs text-muted-foreground">{rows.length.toLocaleString()} of {data.samples.length.toLocaleString()} samples</p>
           </Panel>
         </div>
 
