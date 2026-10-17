@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { loadDemoDataset, prepare, validateDataset, type Dataset } from "@/lib/dataset";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { loadDemoDataset, prepare, mutationRanges, type Prepared } from "@/lib/dataset";
 import { TreeView, type ColorBy } from "@/components/TreeView";
+import { WindowedRows } from "@/components/WindowedRows";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,9 +28,12 @@ const Panel = ({ title, id, children, extra }: { title: string; id?: string; chi
 );
 
 function Dashboard() {
-  const [data, setData] = useState<Dataset>(loadDemoDataset);
+  const [p, setPrepared] = useState<Prepared>(() => prepare(loadDemoDataset()));
+  const data = p.data;
+  const workerRef = useRef<Worker | null>(null);
+  const [importing, setImporting] = useState(false);
+  useEffect(() => () => workerRef.current?.terminate(), []);
   const [uploadMsg, setUploadMsg] = useState<{ ok: boolean; text: string } | null>(null);
-  const p = useMemo(() => prepare(data), [data]);
   const [selected, setSelected] = useState<string | null>(null);
   const [mutation, setMutation] = useState<string | null>(null);
   const [colorBy, setColorBy] = useState<ColorBy>("lineage");
@@ -39,22 +43,17 @@ function Dashboard() {
   const [threshold, setThreshold] = useState(0.8);
   const [lowOnly, setLowOnly] = useState(false);
   const [brushed, setBrushed] = useState<Set<string>>(new Set());
-  const lowBranches = useMemo(() => [...p.nodes.values()].filter((n) => n.parent && n.support < threshold).sort((a, b) => a.support - b.support), [p, threshold]);
+  const lowBranches = useMemo(() => p.ordered.filter((n) => n.parent && n.support < threshold).sort((a, b) => a.support - b.support), [p, threshold]);
 
   const lineages = useMemo(() => [...new Set(data.samples.map((s) => s.lineage))].sort(), [data]);
   const regions = useMemo(() => [...new Set(data.samples.map((s) => s.region))].sort(), [data]);
-  const mutCount = (id: string) => { let c = 0, n = p.nodes.get(id); while (n) { c += n.mutations.length; n = n.parent ? p.nodes.get(n.parent) : undefined; } return c; };
-  const rows = data.samples.filter((s) =>
-    (!q || s.id.toLowerCase().includes(q.toLowerCase())) && (!region || s.region === region) && (!lineage || s.lineage === lineage));
-  const highlight = useMemo(() => {
-    const set = new Set<string>();
-    if (mutation) p.mutationStats.find((m) => m.id === mutation)?.nodeIds.forEach((id) => p.nodes.get(id)!.descendants.concat(id).forEach((d) => {
-      let n = p.nodes.get(d); while (n && !set.has(n.id)) { set.add(n.id); if (n.id === id) break; n = n.parent ? p.nodes.get(n.parent) : undefined; }
-    }));
-    return set;
-  }, [mutation, p]);
+  const mutCount = (id: string) => p.nodes.get(id)?.totalMutations ?? 0;
+  const rows = useMemo(() => data.samples.filter((s) =>
+    (!q || s.id.toLowerCase().includes(q.toLowerCase())) && (!region || s.region === region) && (!lineage || s.lineage === lineage)), [data, q, region, lineage]);
+  const highlight = useMemo(() => mutationRanges(p, mutation), [mutation, p]);
   const sel = selected ? p.nodes.get(selected) : undefined;
-  const mutRows = p.mutationStats.filter((m) => !mutQ || m.id.toLowerCase().includes(mutQ.toLowerCase()) || String(m.position).includes(mutQ));
+  const mutRows = useMemo(() => p.mutationStats.filter((m) => !mutQ || m.id.toLowerCase().includes(mutQ.toLowerCase()) || String(m.position).includes(mutQ)), [p, mutQ]);
+  const brushedRows = useMemo(() => Array.from(brushed), [brushed]);
   const top = p.mutationStats.slice(0, 8);
 
   const searchTree = (e: React.FormEvent) => {
@@ -64,11 +63,21 @@ function Dashboard() {
   };
   const onFile = async (f?: File) => {
     if (!f) return;
-    try {
-      const d = validateDataset(JSON.parse(await f.text()));
-      setData(d); setSelected(null); setMutation(null);
-      setUploadMsg({ ok: true, text: `Loaded "${f.name}" (${d.samples.length} samples).` });
-    } catch (err) { setUploadMsg({ ok: false, text: `Could not load file: ${(err as Error).message}` }); }
+    workerRef.current?.terminate();
+    setImporting(true); setUploadMsg(null);
+    const worker = new Worker(new URL("../lib/dataset.worker.ts", import.meta.url), { type: "module" });
+    workerRef.current = worker;
+    const finish = () => { worker.terminate(); workerRef.current = null; setImporting(false); };
+    worker.onmessage = (event: MessageEvent<{ prepared?: Prepared; error?: string }>) => {
+      if (event.data.prepared) {
+        const next = event.data.prepared;
+        setPrepared(next); setSelected(null); setMutation(null); setBrushed(new Set());
+        setUploadMsg({ ok: true, text: `Loaded "${f.name}" (${next.data.samples.length.toLocaleString()} samples).` });
+      } else setUploadMsg({ ok: false, text: `Could not load file: ${event.data.error}` });
+      finish();
+    };
+    worker.onerror = () => { setUploadMsg({ ok: false, text: "Could not load file. The dataset may exceed this device’s available memory." }); finish(); };
+    worker.postMessage(f);
   };
 
   const stats = [
@@ -94,7 +103,7 @@ function Dashboard() {
         <div id="overview" className="flex flex-wrap items-center gap-3 rounded-md border border-warn/40 bg-warn/10 px-4 py-2 text-xs text-foreground">
           <b>Fictional data.</b> All samples, lineages ("DEMO.*") and mutations are synthetic and do not represent real SARS-CoV-2 observations or CMAPLE 2 results.
           <label className="ml-auto cursor-pointer rounded border bg-card px-2 py-1 font-medium hover:bg-muted">
-            Import JSON dataset<input type="file" accept=".json,application/json" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
+            {importing ? "Loading dataset…" : "Import JSON dataset"}<input type="file" accept=".json,application/json" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
           </label>
         </div>
         {uploadMsg && <div className={`rounded border px-3 py-1.5 text-xs ${uploadMsg.ok ? "border-accent-foreground/30 bg-accent" : "border-destructive/40 bg-destructive/10 text-destructive"}`}>{uploadMsg.text} <button className="ml-2 underline" onClick={() => setUploadMsg(null)}>dismiss</button></div>}
@@ -139,7 +148,7 @@ function Dashboard() {
                     <dt className="text-muted-foreground">Lineage</dt><dd>{sel.sample.lineage}</dd>
                     <dt className="text-muted-foreground">Total muts.</dt><dd>{mutCount(sel.id)}</dd>
                   </> : <>
-                    <dt className="text-muted-foreground">Descendants</dt><dd>{sel.descendants.length} samples</dd>
+                    <dt className="text-muted-foreground">Descendants</dt><dd>{sel.leafEnd - sel.leafStart} samples</dd>
                     <dt className="text-muted-foreground">Children</dt><dd>{sel.children.length}</dd>
                   </>}
                   <dt className="text-muted-foreground">Support</dt><dd className={`font-mono ${sel.support < threshold ? "text-destructive" : ""}`}>{sel.support.toFixed(3)}</dd>
@@ -160,7 +169,7 @@ function Dashboard() {
                     <thead className="text-left text-muted-foreground"><tr><th>Mutation</th><th className="text-right">Posterior</th></tr></thead>
                     <tbody>{sel.mutations.map((m) => (
                       <tr key={m} onClick={() => setMutation(m)} className="cursor-pointer border-t hover:bg-muted">
-                        <td className="py-0.5 font-mono">{m}</td><td className={`text-right font-mono ${sel.mutationPosteriors[m]! < 0.9 ? "text-destructive" : ""}`}>{sel.mutationPosteriors[m]!.toFixed(3)}</td>
+                        <td className="py-0.5 font-mono">{m}</td><td className={`text-right font-mono ${(sel.mutationPosteriors[m] ?? 1) < 0.9 ? "text-destructive" : ""}`}>{sel.mutationPosteriors[m]?.toFixed(3) ?? "—"}</td>
                       </tr>))}</tbody>
                   </table>
                   {!sel.mutations.length && <p className="text-xs text-muted-foreground">No mutations on this branch.</p>}
@@ -168,19 +177,12 @@ function Dashboard() {
             </Panel>
             {brushed.size > 0 && (
               <Panel title={`Area selection (${brushed.size})`} extra={<button className="text-xs underline" onClick={() => setBrushed(new Set())}>clear</button>}>
-                <div className="flex max-h-32 flex-wrap gap-1 overflow-auto">
-                  {[...brushed].map((id) => <button key={id} onClick={() => setSelected(id)} className="rounded bg-muted px-1.5 font-mono text-xs hover:bg-accent">{id}</button>)}
-                </div>
+                <WindowedRows items={brushedRows} height={128} render={(id) => <tr key={id} className="h-7 cursor-pointer hover:bg-accent" onClick={() => setSelected(id)}><td className="truncate font-mono text-xs">{id}</td></tr>} />
               </Panel>
             )}
             <Panel title={`Low-support branches (< ${threshold.toFixed(2)})`}>
-              <div className="max-h-40 space-y-0.5 overflow-auto text-xs">
-                {lowBranches.map((n) => (
-                  <button key={n.id} onClick={() => setSelected(n.id)} className="flex w-full justify-between rounded px-1 hover:bg-muted">
-                    <span className="font-mono">{n.id}</span><span className="font-mono text-destructive">{n.support.toFixed(3)}</span>
-                  </button>))}
-                {!lowBranches.length && <p className="text-muted-foreground">None below threshold.</p>}
-              </div>
+              <WindowedRows items={lowBranches} height={160} render={(n) => <tr key={n.id} className="h-7 cursor-pointer hover:bg-muted" onClick={() => setSelected(n.id)}><td className="truncate font-mono text-xs">{n.id}</td><td className="text-right font-mono text-xs text-destructive">{n.support.toFixed(3)}</td></tr>} />
+              {!lowBranches.length && <p className="text-xs text-muted-foreground">None below threshold.</p>}
             </Panel>
             <Panel title="Top mutations by descendants">
               <div className="space-y-1">
@@ -197,16 +199,11 @@ function Dashboard() {
 
         <div className="grid gap-4 lg:grid-cols-2">
           <Panel id="mutations" title="Mutation explorer (demo annotations)" extra={<input className={input} placeholder="Search mutation/position" value={mutQ} onChange={(e) => setMutQ(e.target.value)} />}>
-            <div className="max-h-80 overflow-auto">
-              <table className="w-full text-sm">
-                <thead className="sticky top-0 bg-card text-left text-xs text-muted-foreground"><tr><th className="py-1">Mutation</th><th>Position</th><th>Anc.</th><th>Der.</th><th className="text-right">Desc. samples</th></tr></thead>
-                <tbody>{mutRows.map((m) => (
-                  <tr key={m.id} onClick={() => setMutation(mutation === m.id ? null : m.id)} className={`cursor-pointer border-t hover:bg-muted ${mutation === m.id ? "bg-highlight/15" : ""}`}>
-                    <td className="py-1 font-mono">{m.id}</td><td className="font-mono">{m.position}</td><td>{m.ancestral}</td><td>{m.derived}</td><td className="text-right font-mono">{m.descendantSamples}</td>
-                  </tr>))}</tbody>
-              </table>
-              {!mutRows.length && <p className="py-6 text-center text-sm text-muted-foreground">No mutations match.</p>}
-            </div>
+            <WindowedRows items={mutRows} header={<tr><th className="py-1">Mutation</th><th>Position</th><th>Anc.</th><th>Der.</th><th className="text-right">Desc. samples</th></tr>} render={(m) => (
+                  <tr key={m.id} onClick={() => setMutation(mutation === m.id ? null : m.id)} className={`h-7 cursor-pointer border-t hover:bg-muted ${mutation === m.id ? "bg-highlight/15" : ""}`}>
+                    <td className="truncate py-1 font-mono">{m.id}</td><td className="font-mono">{m.position}</td><td>{m.ancestral}</td><td>{m.derived}</td><td className="text-right font-mono">{m.descendantSamples}</td>
+                  </tr>)} />
+            {!mutRows.length && <p className="py-6 text-center text-sm text-muted-foreground">No mutations match.</p>}
           </Panel>
 
           <Panel title="Sample metadata" extra={
@@ -215,24 +212,18 @@ function Dashboard() {
               <select className={input} value={region} onChange={(e) => setRegion(e.target.value)}><option value="">All regions</option>{regions.map((r) => <option key={r}>{r}</option>)}</select>
               <select className={input} value={lineage} onChange={(e) => setLineage(e.target.value)}><option value="">All lineages</option>{lineages.map((r) => <option key={r}>{r}</option>)}</select>
             </div>}>
-            <div className="max-h-80 overflow-auto">
-              <table className="w-full text-sm">
-                <thead className="sticky top-0 bg-card text-left text-xs text-muted-foreground"><tr><th className="py-1">Sample ID</th><th>Date</th><th>Region</th><th>Lineage</th><th className="text-right">Muts.</th></tr></thead>
-                <tbody>{rows.map((s) => (
-                  <tr key={s.id} onClick={() => setSelected(s.id)} className={`cursor-pointer border-t hover:bg-muted ${selected === s.id ? "bg-highlight/15" : ""}`}>
-                    <td className="py-1 font-mono">{s.id}</td><td>{s.collectionDate ?? "—"}</td><td>{s.region}</td><td>{s.lineage}</td><td className="text-right font-mono">{mutCount(s.id)}</td>
-                  </tr>))}</tbody>
-              </table>
-              {!rows.length && <p className="py-6 text-center text-sm text-muted-foreground">No samples match these filters.</p>}
-            </div>
+            <WindowedRows items={rows} header={<tr><th className="py-1">Sample ID</th><th>Date</th><th>Region</th><th>Lineage</th><th className="text-right">Muts.</th></tr>} render={(s) => (
+                  <tr key={s.id} onClick={() => setSelected(s.id)} className={`h-7 cursor-pointer border-t hover:bg-muted ${selected === s.id ? "bg-highlight/15" : ""}`}>
+                    <td className="truncate py-1 font-mono">{s.id}</td><td>{s.collectionDate ?? "—"}</td><td>{s.region}</td><td>{s.lineage}</td><td className="text-right font-mono">{mutCount(s.id)}</td>
+                  </tr>)} />
+            {!rows.length && <p className="py-6 text-center text-sm text-muted-foreground">No samples match these filters.</p>}
           </Panel>
         </div>
 
         <Panel id="about" title="About">
-          <p className="text-sm text-muted-foreground">
-            This is a personal prototype showing how researchers could potentioally browsephylogenetic trees produced by CMAPLE 2.
-            It does not run CMAPLE 2 inference and does not fetch live data. The dataset is fictional. 
-            Custom data can be imported as JSON with
+          <p className="max-w-3xl text-sm text-muted-foreground">
+            CMAPLE Explorer is a university research prototype showing how researchers could browse phylogenetic trees produced by CMAPLE 2.
+            It does not run CMAPLE 2 inference and does not fetch live data. The dataset is fictional. Custom data can be imported as JSON with
             three arrays: <code className="font-mono">samples</code> (id, collectionDate, region, lineage), <code className="font-mono">tree</code> (id, parent, branchLength, mutations) and
             <code className="font-mono"> mutations</code> (id, position, ancestral, derived). Sample IDs must match leaf node IDs.
           </p>
