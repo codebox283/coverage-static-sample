@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { loadDemoDataset, prepare, mutationRanges, type Prepared } from "@/lib/dataset";
+import { loadDemoDataset, prepare, mutationRanges, PRESET_DATASETS, type Prepared, type PresetDataset } from "@/lib/dataset";
 import { TreeView, type ColorBy } from "@/components/TreeView";
 import { WindowedRows } from "@/components/WindowedRows";
 
@@ -32,6 +32,7 @@ function Dashboard() {
   const data = p.data;
   const workerRef = useRef<Worker | null>(null);
   const [importing, setImporting] = useState(false);
+  const [selectedPreset, setSelectedPreset] = useState<PresetDataset>("demo");
   useEffect(() => () => workerRef.current?.terminate(), []);
   const [uploadMsg, setUploadMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -61,8 +62,7 @@ function Dashboard() {
     const hit = data.samples.find((s) => s.id.toLowerCase().includes(treeSearch.trim().toLowerCase()));
     if (hit && treeSearch.trim()) setSelected(hit.id); else setUploadMsg({ ok: false, text: `No sample matches "${treeSearch}".` });
   };
-  const onFile = async (f?: File) => {
-    if (!f) return;
+  const loadInWorker = (source: File | { preset: PresetDataset }, label: string) => {
     workerRef.current?.terminate();
     setImporting(true); setUploadMsg(null);
     const worker = new Worker(new URL("../lib/dataset.worker.ts", import.meta.url), { type: "module" });
@@ -72,12 +72,20 @@ function Dashboard() {
       if (event.data.prepared) {
         const next = event.data.prepared;
         setPrepared(next); setSelected(null); setMutation(null); setBrushed(new Set());
-        setUploadMsg({ ok: true, text: `Loaded "${f.name}" (${next.data.samples.length.toLocaleString()} samples).` });
-      } else setUploadMsg({ ok: false, text: `Could not load file: ${event.data.error}` });
+        setUploadMsg({ ok: true, text: `Loaded "${label}" (${next.data.samples.length.toLocaleString()} samples).` });
+      } else setUploadMsg({ ok: false, text: `Could not load dataset: ${event.data.error}` });
       finish();
     };
-    worker.onerror = () => { setUploadMsg({ ok: false, text: "Could not load file. The dataset may exceed this device’s available memory." }); finish(); };
-    worker.postMessage(f);
+    worker.onerror = () => { setUploadMsg({ ok: false, text: "Could not load dataset. It may exceed this device’s available memory." }); finish(); };
+    worker.postMessage(source);
+  };
+  const onFile = (file?: File) => {
+    if (file) loadInWorker(file, file.name);
+  };
+  const onPresetChange = (id: PresetDataset) => {
+    setSelectedPreset(id);
+    const preset = PRESET_DATASETS.find(({ id: presetId }) => presetId === id);
+    if (preset) loadInWorker({ preset: id }, preset.fileName);
   };
 
   const stats = [
@@ -102,9 +110,18 @@ function Dashboard() {
       <main className="mx-auto max-w-7xl space-y-4 px-6 py-5">
         <div id="overview" className="flex flex-wrap items-center gap-3 rounded-md border border-warn/40 bg-warn/10 px-4 py-2 text-xs text-foreground">
           <b>Fictional data.</b> All samples, lineages ("DEMO.*") and mutations are synthetic and do not represent real SARS-CoV-2 observations or CMAPLE 2 results.
-          <label className="ml-auto cursor-pointer rounded border bg-card px-2 py-1 font-medium hover:bg-muted">
-            {importing ? "Loading dataset…" : "Import JSON dataset"}<input type="file" accept=".json,application/json" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
-          </label>
+          <div className="ml-auto flex flex-wrap items-center gap-2">
+            <select aria-label="Dataset to import" className={input} value={selectedPreset} onChange={(e) => {
+              const preset = PRESET_DATASETS.find(({ id }) => id === e.target.value);
+              if (preset) onPresetChange(preset.id);
+            }}>
+              {PRESET_DATASETS.map(({ id, label }) => <option key={id} value={id}>{label}</option>)}
+            </select>
+            {importing && <span role="status" className="text-muted-foreground">Loading dataset…</span>}
+            <label className="cursor-pointer rounded border bg-card px-2 py-1 font-medium hover:bg-muted">
+              Upload JSON file<input type="file" accept=".json,application/json" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
+            </label>
+          </div>
         </div>
         {uploadMsg && <div className={`rounded border px-3 py-1.5 text-xs ${uploadMsg.ok ? "border-accent-foreground/30 bg-accent" : "border-destructive/40 bg-destructive/10 text-destructive"}`}>{uploadMsg.text} <button className="ml-2 underline" onClick={() => setUploadMsg(null)}>dismiss</button></div>}
 

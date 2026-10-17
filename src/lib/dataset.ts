@@ -7,6 +7,13 @@ export interface TreeNode {
 }
 export interface Mutation { id: string; position: number; ancestral: string; derived: string }
 export interface Dataset { name: string; samples: Sample[]; tree: TreeNode[]; mutations: Mutation[] }
+export type PresetDataset = "demo" | "5k" | "10k" | "1m";
+export const PRESET_DATASETS: { id: PresetDataset; label: string; fileName: string }[] = [
+  { id: "demo", label: "Default", fileName: "demo-dataset.json" },
+  { id: "5k", label: "5k nodes", fileName: "cmaple_5k_nodes.json" },
+  { id: "10k", label: "10k nodes", fileName: "cmaple_10k_nodes.json" },
+  { id: "1m", label: "1M nodes", fileName: "cmaple_1M_nodes.json" },
+];
 export const MAX_NODES = 1_000_000;
 const rnd = (s: string) => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return (h >>> 0) / 4294967296; };
 export interface LaidOutNode extends TreeNode {
@@ -21,6 +28,22 @@ export interface Prepared {
   mutationStats: (Mutation & { descendantSamples: number; nodeIds: string[] })[];
 }
 export const loadDemoDataset = (): Dataset => demo as Dataset;
+export async function loadPresetDataset(id: PresetDataset): Promise<Dataset> {
+  switch (id) {
+    case "demo": return loadDemoDataset();
+    case "5k": return fetchPreset("cmaple_5k_nodes.json");
+    case "10k": return fetchPreset("cmaple_10k_nodes.json");
+    case "1m": return fetchPreset("cmaple_1M_nodes.json.gz", true);
+  }
+}
+async function fetchPreset(fileName: string, compressed = false): Promise<Dataset> {
+  const response = await fetch(`${import.meta.env.BASE_URL}datasets/${fileName}`);
+  if (!response.ok) throw new Error(`Could not load dataset (${response.status}).`);
+  if (!compressed) return response.json() as Promise<Dataset>;
+  if (!response.body) throw new Error("Dataset response had no body.");
+  const stream = response.body.pipeThrough(new DecompressionStream("gzip"));
+  return new Response(stream).json() as Promise<Dataset>;
+}
 export function validateDataset(raw: unknown): Dataset {
   const d = raw as Dataset;
   if (!d || typeof d !== "object") throw new Error("File is not a JSON object.");
